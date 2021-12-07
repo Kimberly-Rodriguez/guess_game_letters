@@ -32,7 +32,25 @@ function renderBlanks(){
 };
 
 function startTime(){
-  
+  //set timer
+  timer = setInterval(function() {
+    timerCount--;
+    timerElement.textContent = timerCounter;
+    if (timerCount >= 0) {
+      //Test if win condition is met
+      if (isWin && timerCount > 0) {
+        clearInterval(timer);
+        winGame();
+      }
+    }
+    // Test if time has run out
+    if (timerCount === 0) {
+      //clears interval
+      clearInterval(timer);
+      loseGame();
+    }
+  }, 1000);
+
 }
 
 
