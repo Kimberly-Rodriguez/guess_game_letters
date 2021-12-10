@@ -58,3 +58,5 @@ function startTime(){
 //Attach event listener to start button to call startGame funtion on click
 startButton.addEventListener("click", startGame);
 
+
+
