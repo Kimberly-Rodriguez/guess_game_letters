@@ -62,14 +62,44 @@ function startTime(){
 
 }
 
-//these functions are used by init
-function getWins() {
+//updates win count on screen and sets win count to client storage
+function setWin() {
+  win.textContent = winCounter;
+  localStorage.setItem("winCount", winCounter);
+}
 
+//updates lose count on screen and sets lose count to client storage
+function setLosses() {
+  lose.textContent = loseCounter
+  localStorage.setItem("loseCount", loseCounter);
+}
+
+//these functions are used by init
+function getWins() { 
+  
+  let storedWins = localStorage.getItem("winCount"); 
+
+  if (storedWins === null) {
+    winCounter = 0;
+  } else {
+    winCounter = storedWins; 
+  }
+  win.textContent = winCounter;
 }
 
 function getLosses() {
-  
+  let storedLosses = localStorage.getItem("loseCount");
+
+  if (storedLosses === null) {
+    loseCounter = 0;
+  } else {
+    loseCounter = storedLosses;
+  }
+  lose.textContent = loseCounter; 
+
 }
+
+
 
 
 
