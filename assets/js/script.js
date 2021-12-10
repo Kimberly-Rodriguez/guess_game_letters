@@ -17,6 +17,15 @@ let timerCount;
 let lettersInChoseWord = [];
 let blanksLetter = [];
 
+//Array of words the user will guess
+var words = ["variable", "array", "modulus", "object", "function", "string", "bollean"];
+
+// unit fuction renders on pageload
+function init() {
+getWins();
+getLosses();
+}
+
 //The startGame function is called when the start button is clicked
 function startGame() {
   isWin = false;
@@ -51,6 +60,15 @@ function startTime(){
     }
   }, 1000);
 
+}
+
+//these functions are used by init
+function getWins() {
+
+}
+
+function getLosses() {
+  
 }
 
 
