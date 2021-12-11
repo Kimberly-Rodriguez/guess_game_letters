@@ -2,8 +2,8 @@
 let wordBlank = document.querySelector(".word-blanks");
 let win = document.querySelector(".win");
 let lose = document.querySelector(".lose");
-let timeElement = document.querySelector(".timer-count");
-let startButton = document.querySelector("start-button");
+let timerElement = document.querySelector(".timer-count");
+let startButton = document.querySelector(".start-button");
 
 let choseWord = "";
 let numBlanks = 0;
@@ -46,17 +46,17 @@ function winGame() {
 
 // The loseGame function is called when timer reaches o
 function loseGame(){
-  wordBlank.textContent = "GAME OVER";
+  wordBlank.textContent = "GAME OVER!";
   loseCounter++
   startButton.disabled = false;
   setLosses()
 }
 
-function startTime() {
+function startTimer() {
   //set timer
   timer = setInterval(function() {
     timerCount--;
-    timerElement.textContent = timerCounter;
+    timerElement.textContent = timerCount;
     if (timerCount >= 0) {
       //Test if win condition is met
       if (isWin && timerCount > 0) {
@@ -74,7 +74,7 @@ function startTime() {
 
 }
 
-function renderBlanks(){
+function renderBlanks() {
   chosenWord = words[Math.floor(Math.random() * words.length)];
   lettersInChoseWord = choseWord.split("");
   numBlanks = lettersInChoseWord.length; 
@@ -87,7 +87,7 @@ function renderBlanks(){
 };
 
 //updates win count on screen and sets win count to client storage
-function setWin() {
+function setWins() {
   win.textContent = winCounter;
   localStorage.setItem("winCount", winCounter);
 }
@@ -122,10 +122,6 @@ function getLosses() {
 
 }
 
-
-
-
-
 //Attach event listener to start button to call startGame funtion on click
 startButton.addEventListener("click", startGame);
 
@@ -135,7 +131,7 @@ init();
 //add reset button
 let resetButton = document.querySelector(".reset-button");
 
-function resetGame(){
+function resetGame() {
  // reset win and loss counts
  winCounter = 0;
  loseCounter = 0;
@@ -146,5 +142,5 @@ function resetGame(){
 }
 
 //Attaches event listener to button
-resetButton.addEventListener("click", resetGames);
+resetButton.addEventListener("click", resetGame);
 
