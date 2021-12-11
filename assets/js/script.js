@@ -36,11 +36,23 @@ function startGame() {
   startTimer()
 }
 
-function renderBlanks(){
+// The winGame function is called when the win condition is met
+function winGame() {
+  wordBlank.textContent = "YOU WON!";
+  winCounter++
+  startButton.disabled = false;
+  setWin()
+}
 
-};
+// The loseGame function is called when timer reaches o
+function loseGame(){
+  wordBlank.textContent = "GAME OVER";
+  loseCounter++
+  startButton.disabled = false;
+  setLosses()
+}
 
-function startTime(){
+function startTime() {
   //set timer
   timer = setInterval(function() {
     timerCount--;
@@ -62,6 +74,18 @@ function startTime(){
 
 }
 
+function renderBlanks(){
+  chosenWord = words[Math.floor(Math.random() * words.length)];
+  lettersInChoseWord = choseWord.split("");
+  numBlanks = lettersInChoseWord.length; 
+  blanksLetter = []
+
+  for (let i = 0; i < numBlanks; i++){
+    blanksLetters.push("_");
+  }
+  wordBlank.textContent = blanksLetter.join(" ")
+};
+
 //updates win count on screen and sets win count to client storage
 function setWin() {
   win.textContent = winCounter;
@@ -76,7 +100,6 @@ function setLosses() {
 
 //these functions are used by init
 function getWins() { 
-  
   let storedWins = localStorage.getItem("winCount"); 
 
   if (storedWins === null) {
@@ -106,5 +129,22 @@ function getLosses() {
 //Attach event listener to start button to call startGame funtion on click
 startButton.addEventListener("click", startGame);
 
+//Calls init() so that it fires when page start
+init();
 
+//add reset button
+let resetButton = document.querySelector(".reset-button");
+
+function resetGame(){
+ // reset win and loss counts
+ winCounter = 0;
+ loseCounter = 0;
+
+ //Render win and loss counts and sets them into client storage
+ setWins();
+ setLosses();
+}
+
+//Attaches event listener to button
+resetButton.addEventListener("click", resetGames);
 
