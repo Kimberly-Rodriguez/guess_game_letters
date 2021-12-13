@@ -5,7 +5,7 @@ let lose = document.querySelector(".lose");
 let timerElement = document.querySelector(".timer-count");
 let startButton = document.querySelector(".start-button");
 
-let choseWord = "";
+let chosenWord = "";
 let numBlanks = 0;
 let winCounter = 0;
 let loseCounter= 0;
@@ -14,8 +14,8 @@ let timer;
 let timerCount;
 
 //Arrays to complete blanks
-let lettersInChoseWord = [];
-let blanksLetter = [];
+let lettersInChosenWord = [];
+let blanksLetters = [];
 
 //Array of words the user will guess
 var words = ["variable", "array", "modulus", "object", "function", "string", "bollean"];
@@ -41,12 +41,12 @@ function winGame() {
   wordBlank.textContent = "YOU WON!";
   winCounter++
   startButton.disabled = false;
-  setWin()
+  setWins()
 }
 
 // The loseGame function is called when timer reaches o
-function loseGame(){
-  wordBlank.textContent = "GAME OVER!";
+function loseGame() {
+  wordBlank.textContent = "GAME OVER";
   loseCounter++
   startButton.disabled = false;
   setLosses()
@@ -71,19 +71,18 @@ function startTimer() {
       loseGame();
     }
   }, 1000);
-
 }
 
 function renderBlanks() {
   chosenWord = words[Math.floor(Math.random() * words.length)];
-  lettersInChoseWord = choseWord.split("");
-  numBlanks = lettersInChoseWord.length; 
-  blanksLetter = []
+  lettersInChosenWord = chosenWord.split("");
+  numBlanks = lettersInChosenWord.length; 
+  blanksLetters = []
 
   for (let i = 0; i < numBlanks; i++){
     blanksLetters.push("_");
   }
-  wordBlank.textContent = blanksLetter.join(" ")
+  wordBlank.textContent = blanksLetters.join(" ")
 };
 
 //updates win count on screen and sets win count to client storage
@@ -121,6 +120,45 @@ function getLosses() {
   lose.textContent = loseCounter; 
 
 }
+
+function checkWin() {
+if (chosenWord === blanksLetters.join("") ) {
+  isWin = true
+}
+}
+
+//Testings if letter is in word and renders in to the screen
+function checkLetters(letter) {
+let letterInWord = false;
+for (let i = 0; i < numBlanks; i++){
+  if (chosenWord[i] === letter) {
+    letterInWord = true;
+  }
+}
+if (letterInWord){
+  for (let j= 0; j < numBlanks; j++) {
+      if (chosenWord[j] === letter){
+        blanksLetters[j] = letter;
+      }
+  }
+  wordBlank.textContent = blanksLetters.join(" ");
+}
+}
+
+// attaching event listener to document to listen for key event
+document.addEventListener("keydown", function(e){
+  if (timerCount === 0){
+    return
+  }
+  //converting all keys to lower case
+  let key = e.key.toLowerCase();
+  let alphabetNumbericCharacters ="abcdefghijklmnopqrstuvwxyz0123456789 ".split("");
+  if (alphabetNumbericCharacters.includes(key)) {
+    let letterGuessed = e.key;
+    checkLetters(letterGuessed)
+    checkWin();
+  }
+});
 
 //Attach event listener to start button to call startGame funtion on click
 startButton.addEventListener("click", startGame);
